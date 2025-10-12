@@ -116,140 +116,146 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Filters Section */}
-      <section className="border-b bg-card/30">
-        <div className="container mx-auto px-4 py-6">
-          <div className="flex items-center gap-2 mb-4">
-            <Filter className="h-5 w-5 text-muted-foreground" />
-            <span className="font-semibold">Filter by Tags:</span>
-          </div>
-          <div className="flex flex-wrap gap-2">
-            {allTags.map(tag => {
-              const Icon = tagIcons[tag];
-              const isSelected = selectedTags.includes(tag);
-              return (
-                <Badge
-                  key={tag}
-                  variant={isSelected ? "default" : "outline"}
-                  className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${
-                    isSelected ? tagColors[tag] : 'hover:bg-accent'
-                  }`}
-                  onClick={() => toggleTag(tag)}
+      <section className="container mx-auto px-4 py-6 flex flex-col md:flex-row items-centergap-8 w-full gap-8">
+        {/* Filters Section */}
+        <section className="border-b bg-card/30 w-full md:w-[20%]">
+          <div className="container mx-auto px-4 py-6">
+            <div className="flex items-center gap-2 mb-4">
+              <Filter className="h-5 w-5 text-muted-foreground" />
+              <span className="font-semibold">Filter by Tags:</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {allTags.map(tag => {
+                const Icon = tagIcons[tag];
+                const isSelected = selectedTags.includes(tag);
+                return (
+                  <Badge
+                    key={tag}
+                    variant={isSelected ? "default" : "outline"}
+                    className={`cursor-pointer px-4 py-2 text-sm font-medium transition-all ${
+                      isSelected ? tagColors[tag] : 'hover:bg-accent'
+                    }`}
+                    onClick={() => toggleTag(tag)}
+                  >
+                    <Icon className="h-4 w-4 mr-1" />
+                    {tag}
+                  </Badge>
+                );
+              })}
+              {selectedTags.length > 0 && (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setSelectedTags([])}
+                  className="ml-2"
                 >
-                  <Icon className="h-4 w-4 mr-1" />
-                  {tag}
-                </Badge>
-              );
-            })}
-            {selectedTags.length > 0 && (
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setSelectedTags([])}
-                className="ml-2"
-              >
-                Clear Filters
-              </Button>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {/* Categories Quick Nav */}
-      <section className="border-b bg-muted/30">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 overflow-x-auto pb-2">
-            <Button
-              variant={selectedCategory === null ? "default" : "ghost"}
-              size="sm"
-              onClick={() => setSelectedCategory(null)}
-            >
-              All Categories
-            </Button>
-            {categories.map(category => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "ghost"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className="whitespace-nowrap"
-              >
-                {category}
-              </Button>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Roles Grid */}
-      <section className="py-12">
-        <div className="container mx-auto px-4">
-          {filteredRoles.length === 0 ? (
-            <div className="text-center py-16">
-              <p className="text-muted-foreground text-lg">
-                No roles found matching your criteria. Try adjusting your filters.
-              </p>
+                  Clear Filters
+                </Button>
+              )}
             </div>
-          ) : (
-            <div className="space-y-12">
-              {Object.entries(rolesByCategory).map(([category, roles]) => (
-                <div key={category}>
-                  <div className="flex items-center justify-between mb-6">
-                    <h2 className="text-3xl font-bold">{category}</h2>
-                    <Badge variant="secondary" className="text-sm">
-                      {roles.length} {roles.length === 1 ? 'Role' : 'Roles'}
-                    </Badge>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    {roles.map(role => (
-                      <Link key={role.id} href={`/roles/${role.id}`}>
-                        <Card className="h-full hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer">
-                          <CardHeader>
-                            <CardTitle className="flex items-start justify-between">
-                              <span className="flex-1">{role.title}</span>
-                              <TrendingUp className="h-5 w-5 text-green-500 ml-2" />
-                            </CardTitle>
-                            <CardDescription>{role.shortDescription}</CardDescription>
-                          </CardHeader>
-                          <CardContent className="space-y-4">
-                            <div className="flex flex-wrap gap-1.5">
-                              {role.tags.map(tag => {
-                                const Icon = tagIcons[tag];
-                                return (
-                                  <Badge
-                                    key={tag}
-                                    variant="secondary"
-                                    className={`text-xs ${tagColors[tag]}`}
-                                  >
-                                    <Icon className="h-3 w-3 mr-1" />
-                                    {tag}
-                                  </Badge>
-                                );
-                              })}
-                            </div>
-                            {role.stats && (
-                              <div className="grid grid-cols-2 gap-4 pt-4 border-t text-sm">
-                                <div>
-                                  <p className="text-muted-foreground text-xs">Avg Salary</p>
-                                  <p className="font-semibold">{role.stats.averageSalary}</p>
-                                </div>
-                                <div>
-                                  <p className="text-muted-foreground text-xs">Growth</p>
-                                  <p className="font-semibold text-green-600">{role.stats.growthRate}</p>
-                                </div>
-                              </div>
-                            )}
-                          </CardContent>
-                        </Card>
-                      </Link>
-                    ))}
-                  </div>
+          </div>
+        </section>
+
+        <section className="">
+          {/* Categories Quick Nav */}
+          <section className="border-b bg-muted/30 w-full md:w-[80%]">
+            <div className="container mx-auto px-4 py-4">
+              <div className="flex items-center gap-2 flex-wrap pb-2">
+                <Button
+                  variant={selectedCategory === null ? "default" : "ghost"}
+                  size="sm"
+                  onClick={() => setSelectedCategory(null)}
+                >
+                  All Categories
+                </Button>
+                {categories.map(category => (
+                  <Button
+                    key={category}
+                    variant={selectedCategory === category ? "default" : "ghost"}
+                    size="sm"
+                    onClick={() => setSelectedCategory(category)}
+                    className="whitespace-nowrap"
+                  >
+                    {category}
+                  </Button>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* Roles Grid */}
+          <section className="py-12">
+            <div className="container mx-auto px-4">
+              {filteredRoles.length === 0 ? (
+                <div className="text-center py-16">
+                  <p className="text-muted-foreground text-lg">
+                    No roles found matching your criteria. Try adjusting your filters.
+                  </p>
                 </div>
-              ))}
+              ) : (
+                <div className="space-y-12">
+                  {Object.entries(rolesByCategory).map(([category, roles]) => (
+                    <div key={category}>
+                      <div className="flex items-center justify-between mb-6">
+                        <h2 className="text-3xl font-bold">{category}</h2>
+                        <Badge variant="secondary" className="text-sm">
+                          {roles.length} {roles.length === 1 ? 'Role' : 'Roles'}
+                        </Badge>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        {roles.map(role => (
+                          <Link key={role.id} href={`/roles/${role.id}`}>
+                            <Card className="h-full hover:shadow-lg transition-all hover:border-primary/50 cursor-pointer">
+                              <CardHeader>
+                                <CardTitle className="flex items-start justify-between">
+                                  <span className="flex-1">{role.title}</span>
+                                  <TrendingUp className="h-5 w-5 text-green-500 ml-2" />
+                                </CardTitle>
+                                <CardDescription>{role.shortDescription}</CardDescription>
+                              </CardHeader>
+                              <CardContent className="space-y-4">
+                                <div className="flex flex-wrap gap-1.5">
+                                  {role.tags.map(tag => {
+                                    const Icon = tagIcons[tag];
+                                    return (
+                                      <Badge
+                                        key={tag}
+                                        variant="secondary"
+                                        className={`text-xs ${tagColors[tag]}`}
+                                      >
+                                        <Icon className="h-3 w-3 mr-1" />
+                                        {tag}
+                                      </Badge>
+                                    );
+                                  })}
+                                </div>
+                                {role.stats && (
+                                  <div className="grid grid-cols-2 gap-4 pt-4 border-t text-sm">
+                                    <div>
+                                      <p className="text-muted-foreground text-xs">Avg Salary</p>
+                                      <p className="font-semibold">{role.stats.averageSalary}</p>
+                                    </div>
+                                    <div className='text-right'>
+                                      <p className="text-muted-foreground text-xs">Growth</p>
+                                      <p className="font-semibold text-green-600">{role.stats.growthRate}</p>
+                                    </div>
+                                  </div>
+                                )}
+                              </CardContent>
+                            </Card>
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
-          )}
-        </div>
+          </section>
+        </section>
+
       </section>
+
 
       {/* Footer */}
       <footer className="border-t py-12 bg-muted/30">

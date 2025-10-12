@@ -54,7 +54,7 @@ export const itRoles: ITRole[] = [
   // Software Development
   {
     id: 'full-stack-developer',
-    title: 'Full Stack Developer',
+    title: 'Full Stack Developer (FSD)',
     category: 'Software Development',
     tags: ['Coding'],
     shortDescription: 'Develops both front-end and back-end of web applications',
