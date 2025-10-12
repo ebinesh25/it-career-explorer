@@ -1,0 +1,94 @@
+{
+  "categories": [
+    "Software Development",
+    "Data & Analytics",
+    "Cybersecurity",
+    "Cloud & DevOps",
+    "AI & Machine Learning",
+    "UI/UX Design",
+    "Product & Project Management",
+    "Network & Infrastructure",
+    "Quality Assurance",
+    "Emerging Technologies"
+  ],
+  "itRoles": [
+    {
+      "id": "full-stack-developer",
+      "title": "Full Stack Developer (FSD)",
+      "category": "Software Development",
+      "tags": ["Coding"],
+      "shortDescription": "Develops both front-end and back-end of web applications",
+      "alternateNames": ["Full Stack Engineer", "Web Developer", "Software Engineer"],
+      "technicalSkills": ["JavaScript", "React", "Node.js", "Python", "SQL", "Git", "REST APIs", "Docker"],
+      "softSkills": ["Problem Solving", "Communication", "Time Management", "Adaptability", "Teamwork"],
+      "careerLadder": [
+        { "title": "Junior Full Stack Developer", "yearsOfExperience": "0-2 years", "salaryRange": "$50k - $70k" },
+        { "title": "Full Stack Developer", "yearsOfExperience": "2-5 years", "salaryRange": "$70k - $100k" },
+        { "title": "Senior Full Stack Developer", "yearsOfExperience": "5-8 years", "salaryRange": "$100k - $140k" },
+        { "title": "Lead Full Stack Developer", "yearsOfExperience": "8-12 years", "salaryRange": "$140k - $180k" },
+        { "title": "Principal Engineer", "yearsOfExperience": "12+ years", "salaryRange": "$180k - $250k+" }
+      ],
+      "scope": "Full stack developers work on both client and server-side development, creating complete web applications. They bridge the gap between design and technical implementation.",
+      "jobMarketProjection": "Expected 25% growth in the next 5 years. High demand for full-stack developers as companies seek versatile engineers who can handle multiple aspects of development.",
+      "industry": ["Tech Startups", "E-commerce", "Fintech", "Healthcare Tech", "SaaS Companies"],
+      "hiringCompanies": [
+        {
+          "category": "Pure IT/Tech Companies",
+          "companies": ["Microsoft", "Google", "Meta", "Netflix", "Spotify", "LinkedIn", "Twitter"]
+        },
+        {
+          "category": "Tech-First Companies",
+          "companies": ["Stripe", "Shopify", "Amazon", "PayPal", "Square", "Robinhood", "Coinbase"]
+        },
+        {
+          "category": "Startups & Unicorns",
+          "companies": ["Databricks", "Notion", "Airtable", "Figma", "Canva"]
+        }
+      ],
+      "stats": {
+        "averageSalary": "$95k",
+        "jobOpenings": "120k+",
+        "growthRate": "25%"
+      }
+    },
+    {
+      "id": "frontend-developer",
+      "title": "Frontend Developer",
+      "category": "Software Development",
+      "tags": ["Coding", "Creative"],
+      "shortDescription": "Creates user interfaces and client-side functionality for websites and apps",
+      "alternateNames": ["Frontend Engineer", "UI Developer", "Web UI Developer"],
+      "technicalSkills": ["HTML", "CSS", "JavaScript", "React", "Vue.js", "TypeScript", "Responsive Design", "Webpack"],
+      "softSkills": ["Attention to Detail", "Creativity", "Collaboration", "User Empathy", "Communication"],
+      "careerLadder": [
+        { "title": "Junior Frontend Developer", "yearsOfExperience": "0-2 years", "salaryRange": "$45k - $65k" },
+        { "title": "Frontend Developer", "yearsOfExperience": "2-5 years", "salaryRange": "$65k - $95k" },
+        { "title": "Senior Frontend Developer", "yearsOfExperience": "5-8 years", "salaryRange": "$95k - $130k" },
+        { "title": "Lead Frontend Engineer", "yearsOfExperience": "8-12 years", "salaryRange": "$130k - $170k" },
+        { "title": "Frontend Architect", "yearsOfExperience": "12+ years", "salaryRange": "$170k - $230k+" }
+      ],
+      "scope": "Frontend developers focus on creating engaging, responsive, and accessible user interfaces. They translate design mockups into functional code and optimize user experiences.",
+      "jobMarketProjection": "Steady 20% growth expected over 5 years. Increasing demand for developers skilled in modern frameworks like React, Vue, and Angular.",
+      "industry": ["Web Agencies", "E-commerce", "Media & Entertainment", "SaaS", "Social Media Platforms"],
+      "hiringCompanies": [
+        {
+          "category": "Pure IT/Tech Companies",
+          "companies": ["Google", "Meta", "Netflix", "Spotify", "Adobe", "Salesforce"]
+        },
+        {
+          "category": "Tech-First Companies",
+          "companies": ["Shopify", "Amazon", "eBay", "Etsy", "BigCommerce"]
+        },
+        {
+          "category": "Startups & Unicorns",
+          "companies": ["Canva", "Notion", "Figma", "Airtable"]
+        }
+      ],
+      "stats": {
+        "averageSalary": "$85k",
+        "jobOpenings": "95k+",
+        "growthRate": "20%"
+      }
+    }
+  ]
+}
