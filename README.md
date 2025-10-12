@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+VIEW SITE: [IT HUB](https://it-career-explorer-n5en-8kaaixun9-ebinesh25s-projects.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:
