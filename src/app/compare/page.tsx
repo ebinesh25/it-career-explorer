@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { ArrowLeft, Briefcase, Plus, X, TrendingUp, Award, DollarSign, Users, Code } from 'lucide-react';
@@ -20,7 +20,7 @@ const tagColors: Record<Tag, string> = {
   'Hybrid': 'bg-indigo-500/10 text-indigo-500'
 };
 
-export default function ComparePage() {
+function CompareView() {
   const searchParams = useSearchParams();
   const [selectedRoles, setSelectedRoles] = useState<ITRole[]>([]);
   const [availableRoles, setAvailableRoles] = useState<ITRole[]>(itRoles);
@@ -335,5 +335,13 @@ export default function ComparePage() {
         </div>
       </footer>
     </div>
+  );
+}
+
+export default function ComparePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <CompareView />
+    </Suspense>
   );
 }
