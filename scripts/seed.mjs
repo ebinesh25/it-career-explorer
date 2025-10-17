@@ -4,7 +4,9 @@ dotenv.config({ path: '.env.local' });
 
 import { ConvexHttpClient } from 'convex/browser';
 import { api } from '../convex/_generated/api.js';
-import itRoles from '../src/data/itRoles.json' assert { type: 'json' };
+// Import the JSON data to seed
+import rawData from '../src/data/itRoles.json' assert { type: 'json' };
+const jsonRoles = rawData.itRoles;
 
 async function checkNetwork(url) {
   try {
@@ -51,11 +53,35 @@ async function main() {
   try {
     const client = new ConvexHttpClient(convexUrl);
 
-    console.log(`Seeding database with ${itRoles.length} roles...`);
+    console.log(`Seeding database with ${jsonRoles.length} roles from JSON...`);
+    // Optionally, clear existing data using a server action
+    // await safeAction(client, api.roles.seed, {});
 
-    await safeAction(client, api.roles.seed, { roles: itRoles });
+    // Helper for retrying mutations
+    async function safeMutation(client, mutationFn, args, retries = 3) {
+      for (let i = 0; i < retries; i++) {
+        try {
+          return await client.mutation(mutationFn, args);
+        } catch (err) {
+          console.error(`Mutation attempt ${i + 1} failed:`, err.message);
+          if (i === retries - 1) throw err;
+          await new Promise(res => setTimeout(res, 1000));
+        }
+      }
+    }
 
-    console.log('🎉 Database seeded successfully!');
+    // Seed each role via the addRole mutation
+    for (const role of jsonRoles) {
+      // Destructure to drop the 'id' and rename 'category' to 'categoryName'
+      // JSON schema: { id, title, category, tags, shortDescription, alternateNames, technicalSkills, softSkills, careerLadder, scope, jobMarketProjection, industry, hiringCompanies, stats }
+      // addRole expects: title, categoryName, tags, shortDescription, alternateNames, technicalSkills, softSkills, careerLadder, scope, jobMarketProjection, industry, hiringCompanies?, stats?
+      const { id: _discarded, category, ...rest } = role;
+      const args = { ...rest, categoryName: category };
+      await safeMutation(client, api.roles.addRole, args);
+      console.log(`⇒ Seeded role: ${rest.title}`);
+    }
+
+    console.log('🎉 Database seeded successfully from JSON!');
   } catch (error) {
     console.error('Error seeding database:', error);
     process.exit(1);

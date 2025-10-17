@@ -152,32 +152,62 @@ export const addRole = mutation({
 });
 
 // Action to seed the database from the itRoles.ts file
+// export const seed = action({
+//   args: {},
+//   handler: async (ctx) => {
+//     console.log("Clearing existing data to prevent duplicates...");
+
+//     // Note: This is a destructive operation.
+//     // It's fine for a development seed script, but be careful in production.
+//     const roles = await ctx.db.query('roles').collect();
+//     await Promise.all(roles.map(({ _id }) => ctx.db.delete(_id)));
+
+//     const categories = await ctx.db.query('categories').collect();
+//     await Promise.all(categories.map(({ _id }) => ctx.db.delete(_id)));
+
+//     const skills = await ctx.db.query('skills').collect();
+//     await Promise.all(skills.map(({ _id }) => ctx.db.delete(_id)));
+
+//     const roleSkills = await ctx.db.query('roleSkills').collect();
+//     await Promise.all(roleSkills.map(({ _id }) => ctx.db.delete(_id)));
+    
+//     console.log("Seeding new data...");
+//     for (const role of itRoles) {
+//       await ctx.runMutation(api.roles.addRole, {
+//         ...role,
+//         categoryName: role.category,
+//       });
+//     }
+//     console.log(`Database seeded with ${itRoles.length} roles.`);
+//   },
+// });
 export const seed = action({
   args: {},
   handler: async (ctx) => {
     console.log("Clearing existing data to prevent duplicates...");
 
-    // Note: This is a destructive operation.
-    // It's fine for a development seed script, but be careful in production.
+    // Note: This is a destructive operation. Be cautious in production.
+    // Delete dependent records first
+    const roleSkills = await ctx.db.query('roleSkills').collect();
+    await Promise.all(roleSkills.map(({ _id }) => ctx.db.delete(_id)));
+    // Then delete roles, skills, and categories
     const roles = await ctx.db.query('roles').collect();
     await Promise.all(roles.map(({ _id }) => ctx.db.delete(_id)));
-
+    const skills = await ctx.db.query('skills').collect();
+    await Promise.all(skills.map(({ _id }) => ctx.db.delete(_id)));
     const categories = await ctx.db.query('categories').collect();
     await Promise.all(categories.map(({ _id }) => ctx.db.delete(_id)));
 
-    const skills = await ctx.db.query('skills').collect();
-    await Promise.all(skills.map(({ _id }) => ctx.db.delete(_id)));
-
-    const roleSkills = await ctx.db.query('roleSkills').collect();
-    await Promise.all(roleSkills.map(({ _id }) => ctx.db.delete(_id)));
-    
     console.log("Seeding new data...");
-    for (const role of itRoles) {
+    // Seed roles via addRole mutation, omitting the 'id' field from the source data
+    for (const { id: _discarded, category, ...roleData } of itRoles) {
       await ctx.runMutation(api.roles.addRole, {
-        ...role,
-        categoryName: role.category,
+        ...roleData,
+        categoryName: category,
       });
     }
     console.log(`Database seeded with ${itRoles.length} roles.`);
+    // Return how many roles were inserted
+    return itRoles.length;
   },
 });
