@@ -6,7 +6,8 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Progress } from '@/components/ui/progress';
-import { getRoleById, type Tag } from '@/data/itRoles';
+// import { getRoleById, type Tag } from '@/data/itRoles';
+import { getRoleById } from '../../../../convex/roles';
 
 const tagColors: Record<Tag, string> = {
   'Coding': 'bg-blue-500/10 text-blue-500',

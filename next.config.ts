@@ -1,7 +1,8 @@
 import type { NextConfig } from "next";
 import path from "node:path";
 
-const LOADER = path.resolve(__dirname, 'src/visual-edits/component-tagger-loader.js');
+// Use CommonJS loader so Node can require without ESM errors
+const LOADER = path.resolve(__dirname, 'src/visual-edits/component-tagger-loader.cjs');
 
 const nextConfig: NextConfig = {
   images: {

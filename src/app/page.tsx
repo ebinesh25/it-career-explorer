@@ -8,8 +8,8 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useQuery } from 'convex/react';
-import { api } from '@/convex/_generated/api';
-import type { Doc } from '@/convex/_generated/dataModel';
+import { api } from '../../convex/_generated/api';
+import type { Doc } from '../../convex/_generated/dataModel';
 
 // ITRole and Tag types from Convex data model
 type ITRole = Doc<'roles'>;
@@ -38,6 +38,9 @@ export default function Home() {
   // Fetch roles and categories from Convex
   const itRoles = useQuery(api.getRoles, {}) ?? [];
   const categories = useQuery(api.getCategories, {}) ?? [];
+  console.log('Fetched IT Roles:', itRoles);
+  console.log('Fetched Categories:', categories);
+
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
