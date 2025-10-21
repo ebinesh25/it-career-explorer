@@ -3,11 +3,14 @@ import { v } from 'convex/values';
 
 export default defineSchema({
   roles: defineTable({
+    id: v.string(),
     title: v.string(),
-    category: v.id('categories'),
+    category: v.string(),
     tags: v.array(v.string()),
     shortDescription: v.string(),
     alternateNames: v.array(v.string()),
+    technicalSkills: v.array(v.string()),
+    softSkills: v.array(v.string()),
     careerLadder: v.array(
       v.object({
         title: v.string(),
@@ -42,23 +45,5 @@ export default defineSchema({
   })
   .searchIndex('by_tags', {
     searchField: 'tags',
-  }),
-
-  categories: defineTable({
-    name: v.string(),
-  }),
-
-  skills: defineTable({
-    name: v.string(),
-    type: v.union(v.literal('technical'), v.literal('soft')),
-  }).searchIndex('by_name', {
-    searchField: 'name',
-  }),
-
-  roleSkills: defineTable({
-    roleId: v.id('roles'),
-    skillId: v.id('skills'),
   })
-  .index('by_roleId', ['roleId'])
-  .index('by_skillId', ['skillId']),
 });
