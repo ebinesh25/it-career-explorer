@@ -1,5 +1,9 @@
 "use client";
 
+import { ConvexProvider, ConvexReactClient } from "convex/react";
+
+const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
+
 import { useState, useMemo } from 'react';
 import { Search, Filter, Briefcase, TrendingUp, Code, Palette, Sparkles, Users } from 'lucide-react';
 import Link from 'next/link';
@@ -7,9 +11,12 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { useQuery } from 'convex/react';
 import { api } from '../../convex/_generated/api';
 import type { Doc } from '../../convex/_generated/dataModel';
+import { useMutation, useQuery } from "convex/react";
+
+
+
 
 // ITRole and Tag types from Convex data model
 type ITRole = Doc<'roles'>;
@@ -33,11 +40,11 @@ const tagColors: Record<Tag, string> = {
   'Hybrid': 'bg-indigo-500/10 text-indigo-500 hover:bg-indigo-500/20'
 };
 
-export default function Home() {
+export function Home() {
   const [searchQuery, setSearchQuery] = useState('');
   // Fetch roles and categories from Convex
-  const itRoles = useQuery(api.getRoles, {}) ?? [];
-  const categories = useQuery(api.getCategories, {}) ?? [];
+  const itRoles = useQuery (api.roles.getRoles, {}) ?? [];
+  const categories = useQuery(api.roles.getCategories, {}) ?? [];
   console.log('Fetched IT Roles:', itRoles);
   console.log('Fetched Categories:', categories);
 
@@ -278,7 +285,7 @@ export default function Home() {
       <footer className="border-t py-12 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center text-muted-foreground">
-            <p className="mb-2">© 2024 IT Career Hub. Helping the next generation find their tech career.</p>
+            <p className="mb-2">© 2025 IT Career Hub. Helping the next generation find their tech career.</p>
             <p className="text-sm">Data updated regularly to reflect current job market trends.</p>
           </div>
         </div>
@@ -286,3 +293,11 @@ export default function Home() {
     </div>
   );
 }
+
+export default function App({ Component, pageProps }) {
+  return (
+        <ConvexProvider client={convex}>
+          <Home {...pageProps} />
+        </ConvexProvider>
+  )
+};
