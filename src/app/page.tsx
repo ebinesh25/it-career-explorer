@@ -7,7 +7,13 @@ import { Input } from '@/components/ui/input';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { itRoles, categories, type Tag } from '@/data/itRoles';
+import { useQuery } from 'convex/react';
+import { api } from '@/convex/_generated/api';
+import type { Doc } from '@/convex/_generated/dataModel';
+
+// ITRole and Tag types from Convex data model
+type ITRole = Doc<'roles'>;
+type Tag = ITRole['tags'][number];
 
 const tagIcons: Record<Tag, any> = {
   'Coding': Code,
@@ -29,10 +35,18 @@ const tagColors: Record<Tag, string> = {
 
 export default function Home() {
   const [searchQuery, setSearchQuery] = useState('');
+  // Fetch roles and categories from Convex
+  const itRoles = useQuery(api.getRoles, {}) ?? [];
+  const categories = useQuery(api.getCategories, {}) ?? [];
   const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const allTags: Tag[] = ['Coding', 'Non-Coding', 'Creative', 'Emerging', 'Management', 'Hybrid'];
+  // Build dynamic list of all tags
+  const allTags: Tag[] = useMemo(() => {
+    const tagsSet = new Set<Tag>();
+    itRoles.forEach(role => role.tags.forEach(tag => tagsSet.add(tag)));
+    return Array.from(tagsSet);
+  }, [itRoles]);
 
   const toggleTag = (tag: Tag) => {
     setSelectedTags(prev =>
