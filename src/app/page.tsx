@@ -1,7 +1,6 @@
 "use client";
 
 import { ConvexProvider, ConvexReactClient } from "convex/react";
-
 const convex = new ConvexReactClient(process.env.NEXT_PUBLIC_CONVEX_URL);
 
 import { useState, useMemo } from 'react';
@@ -14,9 +13,6 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { api } from '../../convex/_generated/api';
 import type { Doc } from '../../convex/_generated/dataModel';
 import { useMutation, useQuery } from "convex/react";
-
-
-
 
 // ITRole and Tag types from Convex data model
 type ITRole = Doc<'roles'>;
